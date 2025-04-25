@@ -1,6 +1,17 @@
 import Typewriter from 'typewriter-effect';
+import { setValue } from "../slices/PageStateSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { Pages } from '../enums/Pages';
 
 export default function HomePage() {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setValue(Pages.HOME));
+    },[]);
+
     return (
         <div className="font-roboto-mono font-bold text-center text-white">
             <div className="text-white text-5xl font-bold">

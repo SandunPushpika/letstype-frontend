@@ -1,10 +1,14 @@
-import { useState } from "react";
-import TypingBox from "../components/container/TypingBox";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setValue } from "../slices/PageStateSlice";
+import { Pages } from "../enums/Pages";
 
 export default function SpeedTestPage(){
     
     const [time, setTime] = useState();
     const [level, setLevel] = useState();
+
+    const dispatch = useDispatch();
 
     const paragraph = "Technology has transformed the way we live, work, and communicate. From the rise of artificial intelligence to the expansion of cloud computing, innovations continue to reshape industries and improve efficiency. The internet has made information more accessible than ever, enabling people to learn new skills and connect globally. As advancements in automation and machine learning progress, ethical considerations and cybersecurity become increasingly important. While technology offers countless benefits, it also presents challenges that require responsible use and continuous adaptation to an ever-changing digital landscape.";
 
@@ -15,6 +19,14 @@ export default function SpeedTestPage(){
     const handleLevelChange = (event: any) => {
         setLevel(event.target.value);
     }
+
+    const handleButtonOnClick = (event: any) => {
+        dispatch(setValue(Pages.GAME_PANEL));
+    }
+
+    useEffect(() => {
+        dispatch(setValue(Pages.SPEED_TEST));
+    },[]);
 
     return(
         <div className="font-roboto-mono text-white">
@@ -34,12 +46,9 @@ export default function SpeedTestPage(){
                     <option value="hard">Hard</option>
                     <option value="expert">Expert</option>
                 </select>
-                <button className="bg-white border border-solid text-black font-bold rounded-xl pr-5 pl-5 pt-2 pb-2">
+                <button onClick={handleButtonOnClick} className="bg-white border border-solid text-black font-bold rounded-xl pr-5 pl-5 pt-2 pb-2">
                     START
                 </button>
-            </div>
-            <div>
-                <TypingBox text={paragraph}/>
             </div>
         </div>
     );

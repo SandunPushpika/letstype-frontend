@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { Pages } from "../enums/Pages";
 
 export interface PageState {
-    value : Pages
+    value : Pages,
 }
 
 const initialState: PageState = { value: Pages.HOME}

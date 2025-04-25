@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { setValue } from "../../slices/PageStateSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Pages } from "../../enums/Pages";
-
+import { RootState } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 export default function SideNavigation() {
 
@@ -10,6 +11,9 @@ export default function SideNavigation() {
     const [speedVisibility, setSpeedVisibility] = useState(true);
     const [practiceVisibility, setPracticeVisibility] = useState(true);
     const [activeTab, setActiveTab] = useState(1);
+    const navigate = useNavigate();
+
+    const pageState = useSelector((state: RootState) => state.sideNavigation.value);
 
     const dispatch = useDispatch();
 
@@ -42,12 +46,38 @@ export default function SideNavigation() {
         setActiveTab(tab);
         if(tab == 1){
             dispatch(setValue(Pages.HOME));
+            navigate("/");
         }else if(tab == 2){
             dispatch(setValue(Pages.SPEED_TEST));
+            navigate("/speed-test");
         }else{
             dispatch(setValue(Pages.PRACTICE));
+            navigate("practice");
         }
     }
+
+    // Set the page state
+    useEffect(() => {
+        
+        switch (pageState) {
+            case Pages.HOME:
+                setHomeVisibility(false);
+                setSpeedVisibility(true);
+                setPracticeVisibility(true);
+                break;
+            case Pages.SPEED_TEST:
+                setHomeVisibility(true);
+                setSpeedVisibility(false);
+                setPracticeVisibility(true)
+                break;
+            case Pages.PRACTICE:
+                setHomeVisibility(true);
+                setSpeedVisibility(true);
+                setPracticeVisibility(false);
+                break;
+        }
+
+    }, [pageState])
 
     return (
         <div className="fixed left-3 top-1/2 -translate-y-1/2 flex flex-col text-white w-fit p-5 gap-10">

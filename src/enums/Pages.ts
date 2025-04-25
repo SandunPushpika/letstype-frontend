@@ -1,5 +1,6 @@
 export enum Pages{
     HOME,
     SPEED_TEST,
-    PRACTICE
+    PRACTICE,
+    GAME_PANEL
 }
